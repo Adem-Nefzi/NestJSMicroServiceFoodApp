@@ -6,6 +6,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ConfigService } from '@nestjs/config';
 import { ImageKitService } from '../../infrastructure/services/imagekit.service';
 import type { UploadedFile as UploadedFileType } from '../../common/types/uploaded-file.interface';
 
@@ -14,7 +15,10 @@ import type { UploadedFile as UploadedFileType } from '../../common/types/upload
  */
 @Controller('upload')
 export class UploadController {
-  constructor(private readonly imagekitService: ImageKitService) {}
+  constructor(
+    private readonly imagekitService: ImageKitService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Post('recipe-image')
   @UseInterceptors(FileInterceptor('image'))
@@ -25,23 +29,27 @@ export class UploadController {
       throw new BadRequestException('No image file provided');
     }
 
-    // Validate file type
-    const allowedMimeTypes = [
-      'image/jpeg',
-      'image/jpg',
-      'image/png',
-      'image/webp',
-    ];
+    // Validate file type (configurable via environment)
+    const allowedTypesConfig = this.configService.get<string>(
+      'ALLOWED_FILE_TYPES',
+      'image/jpeg,image/png,image/webp',
+    );
+    const allowedMimeTypes = allowedTypesConfig.split(',').map((t) => t.trim());
+
     if (!allowedMimeTypes.includes(file.mimetype)) {
       throw new BadRequestException(
-        'Invalid file type. Only JPEG, PNG, and WebP are allowed',
+        `Invalid file type. Allowed types: ${allowedMimeTypes.join(', ')}`,
       );
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    // Validate file size (configurable via environment, default 5MB)
+    const maxSize = this.configService.get<number>(
+      'MAX_FILE_SIZE',
+      5 * 1024 * 1024,
+    );
     if (file.size > maxSize) {
-      throw new BadRequestException('File size exceeds 5MB limit');
+      const maxSizeMB = (maxSize / (1024 * 1024)).toFixed(1);
+      throw new BadRequestException(`File size exceeds ${maxSizeMB}MB limit`);
     }
 
     const imageUrl = await this.imagekitService.uploadImage(file, 'recipes');

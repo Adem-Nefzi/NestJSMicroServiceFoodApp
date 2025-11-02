@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nest-food-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-food-app
+    ports:
+      - '${PORT:-3001}:3001'
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - MONGODB_URI=${MONGODB_URI}
+      - PORT=${PORT:-3001}
+      - IMAGEKIT_PUBLIC_KEY=${IMAGEKIT_PUBLIC_KEY}
+      - IMAGEKIT_PRIVATE_KEY=${IMAGEKIT_PRIVATE_KEY}
+      - IMAGEKIT_URL_ENDPOINT=${IMAGEKIT_URL_ENDPOINT}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000}
+      - RATE_LIMIT_TTL=${RATE_LIMIT_TTL:-60000}
+      - RATE_LIMIT_MAX=${RATE_LIMIT_MAX:-100}
+    restart: unless-stopped
+    networks:
+      - food-app-network
+    healthcheck:
+      test: ['CMD', 'node', '-e', "require('http').get('http://localhost:3001/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+
+networks:
+  food-app-network:
+    driver: bridge
