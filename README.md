@@ -1,213 +1,228 @@
-# NestJS Food Microservice<p align="center">
-
-<a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-
-A microservice for managing recipes, favorites, comments, and ratings using Clean Architecture and MongoDB Atlas.</p>
-
-## Quick Start[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-````bash
-
-# Install dependencies  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-
-npm install    <p align="center">
-
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-
-# Configure .env file<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/recipe_app<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-
-PORT=3001<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-
-# Start development server<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-
-npm run start:dev<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-
-```  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-
-## Features  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-- ✅ Recipe management with approval workflow  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+<h1 align="center">Food Recipe Microservice</h1>
 
-- ✅ User favorites system  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<p align="center">
+  A production-ready NestJS microservice for managing recipes, favorites, comments, and ratings.
+  <br />
+  Built with Clean Architecture principles and MongoDB Atlas.
+</p>
 
-- ✅ Comments with authorization
+## ✨ Features
 
-- ✅ Star ratings (1-5) with auto-calculation## Description
+### Core Functionality
+- 🍳 **Recipe Management** - Create, read, update, and delete recipes with approval workflow
+- ⭐ **Favorites System** - Users can save and manage their favorite recipes
+- 💬 **Comments** - Users can comment on recipes with proper authorization
+- ⭐ **Rating System** - 5-star rating system with automatic average calculation
+- 🖼️ **Image Upload** - Secure image uploads with ImageKit integration
 
-- ✅ Clean Architecture implementation
-
-- ✅ MongoDB Atlas integration**Food App Microservice** - A NestJS application managing Recipe, Favorite, Comment, and Rating collections following **Clean Architecture** principles.
-
-- ✅ Microservice-ready (CORS enabled)
-
-This microservice is part of a larger food app project that includes a Spring Boot user authentication service.
-
-## API Endpoints
+### Technical Features
+- 🏗️ **Clean Architecture** - Separation of concerns with Domain, Application, Infrastructure, and Presentation layers
+- 🛡️ **Production Security** - Helmet.js, rate limiting, CORS, and input validation
+- 📦 **MongoDB Atlas** - Cloud database integration with Mongoose ODM
+- 🐳 **Docker Support** - Ready for containerized deployment
+- 🔄 **Microservice Ready** - CORS enabled for inter-service communication
+- 📝 **TypeScript** - Full type safety and modern JavaScript features
 
 ## 🏗️ Architecture
 
-- **Recipes**: `/recipes` (CRUD + approve/reject)
+This project follows **Clean Architecture** principles:
 
-- **Favorites**: `/favorites` (add, remove, check)This project follows **Clean Architecture** with the following layers:
+```
+src/
+├── domain/              # Business entities and repository interfaces
+├── application/         # Use cases and business logic
+├── infrastructure/      # Database, external services (MongoDB, ImageKit)
+└── presentation/        # REST API controllers
+```
 
-- **Comments**: `/comments` (CRUD with user auth)
+**Benefits:**
+- ✅ Independent of frameworks and UI
+- ✅ Testable business logic
+- ✅ Easy to swap databases or external services
+- ✅ Clear separation of concerns
 
-- **Ratings**: `/ratings` (CRUD with unique constraint)- **Domain Layer**: Core business entities and repository interfaces
+## 🚀 Tech Stack
 
-- **Application Layer**: Use cases and business logic
+- **Framework:** NestJS 11
+- **Language:** TypeScript
+- **Database:** MongoDB Atlas with Mongoose
+- **Cloud Storage:** ImageKit.io
+- **Security:** Helmet, Throttler, CORS
+- **Deployment:** Docker, Docker Compose
 
-## Documentation- **Infrastructure Layer**: Database implementations (MongoDB)
+## � Prerequisites
 
-- **Presentation Layer**: REST API controllers
-
-See [SETUP.md](./SETUP.md) for detailed documentation.
-
-📖 **Read the detailed architecture guide**: [ARCHITECTURE.md](./ARCHITECTURE.md)
-
-## Tech Stack📊 **Understand the flow**: [CLEAN_ARCHITECTURE_FLOW.md](./CLEAN_ARCHITECTURE_FLOW.md)
-
-📋 **Complete summary**: [SUMMARY.md](./SUMMARY.md)
-
-- NestJS 11
-
-- MongoDB Atlas (Mongoose)## ✨ Features
-
-- TypeScript
-
-- Clean Architecture- ✅ Recipe CRUD with approval workflow
-
-- ✅ Favorites system
-
-## Port- ✅ Comments with authorization
-
-- ✅ Rating system with automatic averages
-
-Default: `3001` (configurable via .env)- ✅ MongoDB integration
-
-- ✅ Clean Architecture structure
-- ✅ Microservice ready
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js (v16+)
-- MongoDB running on `localhost:27017`
+- Node.js (v18 or v20 recommended)
 - npm or yarn
+- MongoDB Atlas account (or local MongoDB instance)
+- ImageKit.io account (for image uploads)
 
-### Installation
+## 🚀 Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/Adem-Nefzi/NestJSMicroServiceFoodApp.git
+cd nest-food-app
+
 # Install dependencies
-$ npm install
+npm install
 
-# Configure environment
-$ cp .env.example .env
-# Edit .env if needed (default: mongodb://localhost:27017/food-app)
-````
+# Configure environment variables
+cp .env.example .env
+# Edit .env with your credentials (MongoDB URI, ImageKit keys, etc.)
+```
 
-## 🏃 Run the Application
+## ⚙️ Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Application
+NODE_ENV=development
+PORT=3001
+
+# Database
+MONGODB_URI=your_mongodb_atlas_connection_string
+
+# Image Storage
+IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
+
+# Security
+CORS_ORIGINS=http://localhost:3000,http://localhost:4200
+RATE_LIMIT_TTL=60000
+RATE_LIMIT_MAX=100
+```
+
+## 🏃 Running the Application
 
 ```bash
-# Development mode (with auto-reload)
-$ npm run start:dev
+# Development mode (with hot reload)
+npm run start:dev
 
-# Production build
-$ npm run build
-$ npm run start:prod
+# Production mode
+npm run build
+npm run start:prod
 
-# Simple start
-$ npm run start
+# Watch mode
+npm run start
 ```
 
 The API will be available at `http://localhost:3001`
 
-## 🧪 Test the API
-
-See detailed testing guide: [TESTING_GUIDE.md](./TESTING_GUIDE.md)
-
-### Quick Test
+## 🐳 Docker Deployment
 
 ```bash
-# Create a recipe
-curl -X POST http://localhost:3001/recipes \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Test Recipe",
-    "description": "A test recipe",
-    "imageUrl": "https://example.com/image.jpg",
-    "ingredients": ["ingredient1", "ingredient2"],
-    "steps": ["step1", "step2"],
-    "category": "Test",
-    "prepTime": 10,
-    "cookTime": 20,
-    "difficulty": "easy",
-    "userId": "user123"
-  }'
+# Build and run with Docker Compose
+docker-compose up -d
 
-# Get all recipes
-curl http://localhost:3001/recipes
+# Or build Docker image manually
+docker build -t nest-food-app .
+docker run -p 3001:3001 --env-file .env nest-food-app
 ```
 
-## Run tests
+## 📡 API Endpoints
+
+### Recipes
+- `GET /recipes` - Get all recipes
+- `GET /recipes/:id` - Get recipe by ID
+- `POST /recipes` - Create new recipe
+- `PUT /recipes/:id` - Update recipe
+- `DELETE /recipes/:id` - Delete recipe
+- `PATCH /recipes/:id/approve` - Approve recipe
+- `PATCH /recipes/:id/reject` - Reject recipe
+
+### Favorites
+- `GET /favorites/user/:userId` - Get user's favorites
+- `POST /favorites` - Add recipe to favorites
+- `DELETE /favorites/:id` - Remove from favorites
+
+### Comments
+- `GET /comments/recipe/:recipeId` - Get recipe comments
+- `POST /comments` - Add comment
+- `PUT /comments/:id` - Update comment
+- `DELETE /comments/:id` - Delete comment
+
+### Ratings
+- `GET /ratings/recipe/:recipeId` - Get recipe ratings
+- `POST /ratings` - Add/Update rating
+- `DELETE /ratings/:id` - Delete rating
+
+### Uploads
+- `POST /upload/recipe-image` - Upload recipe image
+
+## 🧪 Testing
 
 ```bash
-# unit tests
-$ npm run test
+# Run unit tests
+npm run test
 
-# e2e tests
-$ npm run test:e2e
+# Run e2e tests
+npm run test:e2e
 
-# test coverage
-$ npm run test:cov
+# Generate test coverage
+npm run test:cov
+
+# Run linting
+npm run lint
 ```
 
-## Deployment
+## 🔒 Security Features
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- **Helmet.js** - Secure HTTP headers
+- **Rate Limiting** - 100 requests per minute per IP
+- **CORS** - Configurable allowed origins
+- **Input Validation** - DTOs with class-validator
+- **File Upload Security** - Size and type restrictions
+- **Compression** - Reduced bandwidth usage
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🛠️ Built With
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+- [NestJS](https://nestjs.com/) - Progressive Node.js framework
+- [MongoDB](https://www.mongodb.com/) - NoSQL database
+- [Mongoose](https://mongoosejs.com/) - MongoDB object modeling
+- [ImageKit](https://imagekit.io/) - Cloud image storage and CDN
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
+
+## 📝 Project Structure
+
+```
+src/
+├── domain/                    # Business entities & interfaces
+│   ├── entities/             # Core business objects
+│   └── repositories/         # Repository interfaces
+├── application/              # Business logic & use cases
+│   └── use-cases/           # Application services
+├── infrastructure/           # External services & implementations
+│   ├── database/            # MongoDB schemas & models
+│   ├── repositories/        # Repository implementations
+│   └── services/            # External services (ImageKit)
+├── presentation/            # API layer
+│   └── controllers/         # REST endpoints
+├── modules/                 # NestJS modules
+└── common/                  # Shared utilities & types
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🤝 Contributing
 
-## Resources
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📄 License
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+This project is licensed under the MIT License.
 
-## Support
+## 👤 Author
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Adem Nefzi**
+- GitHub: [@Adem-Nefzi](https://github.com/Adem-Nefzi)
 
-## Stay in touch
+## 🙏 Acknowledgments
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Built with [NestJS](https://nestjs.com/)
+- Inspired by Clean Architecture principles
+- Part of a microservices-based food application project
