@@ -1,6 +1,7 @@
 /**
  * Comment Entity - Domain Layer
  * Represents a user's comment on a recipe
+ * Supports nested replies via parentCommentId
  */
 export class Comment {
   constructor(
@@ -8,6 +9,7 @@ export class Comment {
     public readonly recipeId: string,
     public readonly userId: string,
     public text: string,
+    public readonly parentCommentId: string | null,
     public readonly createdAt: Date,
     public updatedAt: Date,
   ) {}
@@ -32,5 +34,26 @@ export class Comment {
    */
   isForRecipe(recipeId: string): boolean {
     return this.recipeId === recipeId;
+  }
+
+  /**
+   * Business logic: Check if this is a top-level comment
+   */
+  isTopLevel(): boolean {
+    return this.parentCommentId === null;
+  }
+
+  /**
+   * Business logic: Check if this is a reply to another comment
+   */
+  isReply(): boolean {
+    return this.parentCommentId !== null;
+  }
+
+  /**
+   * Business logic: Check if this is a reply to a specific comment
+   */
+  isReplyTo(commentId: string): boolean {
+    return this.parentCommentId === commentId;
   }
 }

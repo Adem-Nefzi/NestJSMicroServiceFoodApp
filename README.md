@@ -13,6 +13,7 @@
 ## ✨ Features
 
 ### Core Functionality
+
 - 🍳 **Recipe Management** - Create, read, update, and delete recipes with approval workflow
 - ⭐ **Favorites System** - Users can save and manage their favorite recipes
 - 💬 **Comments** - Users can comment on recipes with proper authorization
@@ -20,6 +21,7 @@
 - 🖼️ **Image Upload** - Secure image uploads with ImageKit integration
 
 ### Technical Features
+
 - 🏗️ **Clean Architecture** - Separation of concerns with Domain, Application, Infrastructure, and Presentation layers
 - 🛡️ **Production Security** - Helmet.js, rate limiting, CORS, and input validation
 - 📦 **MongoDB Atlas** - Cloud database integration with Mongoose ODM
@@ -40,6 +42,7 @@ src/
 ```
 
 **Benefits:**
+
 - ✅ Independent of frameworks and UI
 - ✅ Testable business logic
 - ✅ Easy to swap databases or external services
@@ -129,6 +132,7 @@ docker run -p 3001:3001 --env-file .env nest-food-app
 ## 📡 API Endpoints
 
 ### Recipes
+
 - `GET /recipes` - Get all recipes
 - `GET /recipes/:id` - Get recipe by ID
 - `POST /recipes` - Create new recipe
@@ -138,22 +142,26 @@ docker run -p 3001:3001 --env-file .env nest-food-app
 - `PATCH /recipes/:id/reject` - Reject recipe
 
 ### Favorites
+
 - `GET /favorites/user/:userId` - Get user's favorites
 - `POST /favorites` - Add recipe to favorites
 - `DELETE /favorites/:id` - Remove from favorites
 
 ### Comments
+
 - `GET /comments/recipe/:recipeId` - Get recipe comments
 - `POST /comments` - Add comment
 - `PUT /comments/:id` - Update comment
 - `DELETE /comments/:id` - Delete comment
 
 ### Ratings
+
 - `GET /ratings/recipe/:recipeId` - Get recipe ratings
 - `POST /ratings` - Add/Update rating
 - `DELETE /ratings/:id` - Delete rating
 
 ### Uploads
+
 - `POST /upload/recipe-image` - Upload recipe image
 
 ## 🧪 Testing
@@ -219,6 +227,7 @@ This project is licensed under the MIT License.
 ## 👤 Author
 
 **Adem Nefzi**
+
 - GitHub: [@Adem-Nefzi](https://github.com/Adem-Nefzi)
 
 ## 🙏 Acknowledgments

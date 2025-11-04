@@ -27,22 +27,35 @@ export class CommentController {
     return this.mapToResponseDto(comment);
   }
 
-  @Get()
-  async findByRecipeOrUser(
-    @Query('recipeId') recipeId?: string,
-    @Query('userId') userId?: string,
+  @Get('recipe/:recipeId')
+  async getCommentsByRecipe(
+    @Param('recipeId') recipeId: string,
   ): Promise<CommentResponseDto[]> {
-    let comments: Comment[];
-
-    if (recipeId) {
-      comments = await this.commentUseCase.getCommentsByRecipeId(recipeId);
-    } else if (userId) {
-      comments = await this.commentUseCase.getCommentsByUserId(userId);
-    } else {
-      return [];
-    }
-
+    const comments = await this.commentUseCase.getCommentsByRecipeId(recipeId);
     return comments.map((comment) => this.mapToResponseDto(comment));
+  }
+
+  @Get('recipe/:recipeId/tree')
+  async getCommentsWithReplies(
+    @Param('recipeId') recipeId: string,
+  ): Promise<CommentResponseDto[]> {
+    return this.commentUseCase.getCommentsWithReplies(recipeId);
+  }
+
+  @Get('user/:userId')
+  async getCommentsByUser(
+    @Param('userId') userId: string,
+  ): Promise<CommentResponseDto[]> {
+    const comments = await this.commentUseCase.getCommentsByUserId(userId);
+    return comments.map((comment) => this.mapToResponseDto(comment));
+  }
+
+  @Get(':commentId/replies')
+  async getReplies(
+    @Param('commentId') commentId: string,
+  ): Promise<CommentResponseDto[]> {
+    const replies = await this.commentUseCase.getRepliesByCommentId(commentId);
+    return replies.map((reply) => this.mapToResponseDto(reply));
   }
 
   @Put(':id')
@@ -59,8 +72,10 @@ export class CommentController {
   async remove(
     @Param('id') id: string,
     @Query('userId') userId: string,
+    @Query('deleteReplies') deleteReplies?: string,
   ): Promise<void> {
-    await this.commentUseCase.deleteComment(id, userId);
+    const shouldDeleteReplies = deleteReplies !== 'false';
+    await this.commentUseCase.deleteComment(id, userId, shouldDeleteReplies);
   }
 
   private mapToResponseDto(comment: Comment): CommentResponseDto {
@@ -69,6 +84,7 @@ export class CommentController {
       recipeId: comment.recipeId,
       userId: comment.userId,
       text: comment.text,
+      parentCommentId: comment.parentCommentId,
       createdAt: comment.createdAt,
       updatedAt: comment.updatedAt,
     };
