@@ -43,6 +43,12 @@ export class RecipeSchema extends Document {
   @Prop({ default: 0 })
   averageRating: number;
 
+  @Prop({ default: 0 })
+  totalFavorites: number;
+
+  @Prop({ default: 0 })
+  totalRatings: number;
+
   @Prop({
     required: true,
     enum: ['pending', 'approved', 'rejected'],

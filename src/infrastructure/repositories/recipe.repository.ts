@@ -91,6 +91,48 @@ export class RecipeRepository implements IRecipeRepository {
   }
 
   /**
+   * Atomically increment totalFavorites counter
+   */
+  async incrementFavorites(recipeId: string): Promise<void> {
+    await this.recipeModel
+      .updateOne({ _id: recipeId }, { $inc: { totalFavorites: 1 } })
+      .exec();
+  }
+
+  /**
+   * Atomically decrement totalFavorites counter (never below 0)
+   */
+  async decrementFavorites(recipeId: string): Promise<void> {
+    await this.recipeModel
+      .updateOne(
+        { _id: recipeId, totalFavorites: { $gt: 0 } },
+        { $inc: { totalFavorites: -1 } },
+      )
+      .exec();
+  }
+
+  /**
+   * Atomically increment totalRatings counter
+   */
+  async incrementRatings(recipeId: string): Promise<void> {
+    await this.recipeModel
+      .updateOne({ _id: recipeId }, { $inc: { totalRatings: 1 } })
+      .exec();
+  }
+
+  /**
+   * Atomically decrement totalRatings counter (never below 0)
+   */
+  async decrementRatings(recipeId: string): Promise<void> {
+    await this.recipeModel
+      .updateOne(
+        { _id: recipeId, totalRatings: { $gt: 0 } },
+        { $inc: { totalRatings: -1 } },
+      )
+      .exec();
+  }
+
+  /**
    * Map MongoDB document to Domain Entity
    */
   private mapToEntity(doc: RecipeSchema): Recipe {
@@ -111,7 +153,9 @@ export class RecipeRepository implements IRecipeRepository {
       doc.cookTime,
       doc.difficulty as 'easy' | 'medium' | 'hard',
       doc.userId,
-      doc.averageRating,
+      doc.averageRating || 0,
+      doc.totalFavorites || 0,
+      doc.totalRatings || 0,
       doc.status as 'pending' | 'approved' | 'rejected',
       doc.createdAt,
       doc.updatedAt,

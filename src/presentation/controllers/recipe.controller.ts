@@ -95,6 +95,8 @@ export class RecipeController {
       difficulty: recipe.difficulty,
       userId: recipe.userId,
       averageRating: recipe.averageRating,
+      totalFavorites: recipe.totalFavorites,
+      totalRatings: recipe.totalRatings,
       status: recipe.status,
       createdAt: recipe.createdAt,
       updatedAt: recipe.updatedAt,

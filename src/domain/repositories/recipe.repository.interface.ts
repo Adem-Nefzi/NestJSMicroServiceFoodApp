@@ -27,4 +27,8 @@ export interface IRecipeRepository {
   update(id: string, recipe: Partial<Recipe>): Promise<Recipe | null>;
   delete(id: string): Promise<boolean>;
   updateAverageRating(recipeId: string, averageRating: number): Promise<void>;
+  incrementFavorites(recipeId: string): Promise<void>;
+  decrementFavorites(recipeId: string): Promise<void>;
+  incrementRatings(recipeId: string): Promise<void>;
+  decrementRatings(recipeId: string): Promise<void>;
 }

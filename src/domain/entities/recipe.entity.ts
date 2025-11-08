@@ -17,6 +17,8 @@ export class Recipe {
     public difficulty: 'easy' | 'medium' | 'hard',
     public userId: string, // Reference to user who created it
     public averageRating: number,
+    public totalFavorites: number,
+    public totalRatings: number,
     public status: 'pending' | 'approved' | 'rejected',
     public readonly createdAt: Date,
     public updatedAt: Date,

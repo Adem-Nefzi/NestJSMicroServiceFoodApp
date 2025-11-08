@@ -46,6 +46,9 @@ export class RatingUseCase {
         userId: dto.userId,
         stars: dto.stars,
       });
+
+      // Atomically increment totalRatings counter (only for NEW ratings)
+      await this.recipeRepository.incrementRatings(dto.recipeId);
     }
 
     // Business logic: Update recipe's average rating
@@ -117,6 +120,9 @@ export class RatingUseCase {
     if (!deleted) {
       throw new NotFoundException(`Rating with ID ${id} not found`);
     }
+
+    // Atomically decrement totalRatings counter
+    await this.recipeRepository.decrementRatings(recipeId);
 
     // Business logic: Update recipe's average rating after deletion
     await this.updateRecipeAverageRating(recipeId);

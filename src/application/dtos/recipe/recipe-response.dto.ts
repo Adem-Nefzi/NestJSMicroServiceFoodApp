@@ -14,6 +14,8 @@ export class RecipeResponseDto {
   difficulty: 'easy' | 'medium' | 'hard';
   userId: string;
   averageRating: number;
+  totalFavorites: number;
+  totalRatings: number;
   status: 'pending' | 'approved' | 'rejected';
   createdAt: Date;
   updatedAt: Date;

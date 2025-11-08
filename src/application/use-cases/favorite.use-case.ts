@@ -4,6 +4,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import type { IFavoriteRepository } from '../../domain/repositories/favorite.repository.interface';
+import type { IRecipeRepository } from '../../domain/repositories/recipe.repository.interface';
 import { Favorite } from '../../domain/entities/favorite.entity';
 import { CreateFavoriteDto } from '../dtos/favorite/create-favorite.dto';
 
@@ -12,7 +13,10 @@ import { CreateFavoriteDto } from '../dtos/favorite/create-favorite.dto';
  */
 @Injectable()
 export class FavoriteUseCase {
-  constructor(private readonly favoriteRepository: IFavoriteRepository) {}
+  constructor(
+    private readonly favoriteRepository: IFavoriteRepository,
+    private readonly recipeRepository: IRecipeRepository,
+  ) {}
 
   async addFavorite(dto: CreateFavoriteDto): Promise<Favorite> {
     // Business logic: Check if favorite already exists
@@ -25,10 +29,15 @@ export class FavoriteUseCase {
       throw new ConflictException('Recipe is already in favorites');
     }
 
-    return this.favoriteRepository.create({
+    const favorite = await this.favoriteRepository.create({
       userId: dto.userId,
       recipeId: dto.recipeId,
     });
+
+    // Atomically increment totalFavorites counter
+    await this.recipeRepository.incrementFavorites(dto.recipeId);
+
+    return favorite;
   }
 
   async getFavoritesByUserId(userId: string): Promise<Favorite[]> {
@@ -44,6 +53,9 @@ export class FavoriteUseCase {
     if (!deleted) {
       throw new NotFoundException('Favorite not found');
     }
+
+    // Atomically decrement totalFavorites counter
+    await this.recipeRepository.decrementFavorites(recipeId);
   }
 
   async checkIfFavorite(userId: string, recipeId: string): Promise<boolean> {
